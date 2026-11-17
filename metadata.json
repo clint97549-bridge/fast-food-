@@ -1,0 +1,6 @@
+{
+  "name": "Roll N' Roll — Pakistani Restaurant",
+  "description": "Roll N' Roll Pakistani Restaurant in Karachi. Order crispy zinger rolls, juicy smash burgers, pizza, pasta, broast, BBQ & combo deals online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
