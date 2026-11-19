@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Oswald", sans-serif;
+  --font-display: "Anton", "Oswald", sans-serif;
+  --font-condensed: "Oswald", sans-serif;
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --font-arabic: "Amiri", serif;
 }
@@ -9,9 +10,9 @@
 @layer base {
   html {
     font-family: var(--font-sans);
-    background-color: #080808;
-    color: #ffffff;
-    scroll-padding-top: 132px;
+    background-color: #ffffff;
+    color: #18181b;
+    scroll-padding-top: 140px;
   }
 }
 

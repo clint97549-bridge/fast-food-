@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Flame, ShieldCheck, Star, Timer } from 'lucide-react';
-import { CustomerReview, INITIAL_REVIEWS, LOGO_URL } from '../data/menuData';
+import { Star } from 'lucide-react';
+import {
+  CustomerReview,
+  INITIAL_REVIEWS,
+  RESTAURANT_INFO,
+} from '../data/menuData';
 
 export const ReviewsAndAbout: React.FC = () => {
   const [reviews, setReviews] = useState<CustomerReview[]>(INITIAL_REVIEWS);
@@ -18,7 +22,7 @@ export const ReviewsAndAbout: React.FC = () => {
       author: author.trim(),
       neighborhood: 'Karachi',
       rating,
-      dishOrdered: dishOrdered.trim() || 'Signature Roll & Smash Burger',
+      dishOrdered: dishOrdered.trim() || 'Crispy Zinger Roll & Smoky Beast',
       comment: comment.trim(),
       date: 'Just now',
     };
@@ -31,25 +35,22 @@ export const ReviewsAndAbout: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#0a0a0c] border-t border-white/10">
+    <div className="max-w-[1320px] mx-auto px-4 sm:px-6 space-y-8 pt-6 pb-8">
       {/* Customer Reviews Section */}
-      <section
-        id="reviews"
-        className="scroll-mt-[140px] max-w-[1380px] mx-auto px-4 sm:px-6 py-14"
-      >
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <section id="reviews" className="scroll-mt-[136px]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
           <div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide text-white">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-zinc-900 tracking-tight">
               Karachi Customer Reviews
             </h2>
-            <p className="text-sm text-zinc-400 mt-1">
-              Rated 4.9 / 5 by regulars across Jamshed Road, PECHS & Bahadurabad
+            <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
+              Rated 4.9 / 5 across Jamshed Road No. 3, PECHS &amp; Bahadurabad
             </p>
           </div>
           <button
             type="button"
             onClick={() => setShowReviewForm((prev) => !prev)}
-            className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/30 text-xs font-bold transition-colors cursor-pointer self-start sm:self-auto whitespace-nowrap"
+            className="px-4 py-2 rounded-full bg-zinc-100 hover:bg-black hover:text-white text-zinc-900 text-xs font-bold transition-colors cursor-pointer self-start sm:self-auto whitespace-nowrap"
           >
             {showReviewForm ? 'Close Form' : 'Write a Review'}
           </button>
@@ -58,7 +59,7 @@ export const ReviewsAndAbout: React.FC = () => {
         {showReviewForm && (
           <form
             onSubmit={handleSubmitReview}
-            className="mb-8 p-5 rounded-xl bg-[#131316] border border-amber-500/30 grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="mb-6 p-5 rounded-2xl bg-[#F4F4F5] border border-zinc-200 grid grid-cols-1 sm:grid-cols-2 gap-3.5"
           >
             <input
               type="text"
@@ -66,17 +67,19 @@ export const ReviewsAndAbout: React.FC = () => {
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="Your Name *"
               required
-              className="px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+              className="px-3.5 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-black"
             />
             <input
               type="text"
               value={dishOrdered}
               onChange={(e) => setDishOrdered(e.target.value)}
-              placeholder="Dish Ordered (e.g. Smoky Beast)"
-              className="px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+              placeholder="Dish Ordered (e.g. Crispy Zinger Roll)"
+              className="px-3.5 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-black"
             />
-            <div className="sm:col-span-2 flex items-center gap-2">
-              <span className="text-xs text-zinc-400 font-medium">Rating:</span>
+            <div className="sm:col-span-2 flex items-center gap-1.5">
+              <span className="text-xs font-semibold text-zinc-600 mr-1">
+                Rating:
+              </span>
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
@@ -86,10 +89,10 @@ export const ReviewsAndAbout: React.FC = () => {
                   aria-label={`Rate ${star} stars`}
                 >
                   <Star
-                    className={`w-5 h-5 ${
+                    className={`w-4 h-4 ${
                       star <= rating
-                        ? 'text-amber-400 fill-amber-400'
-                        : 'text-zinc-600'
+                        ? 'text-[#FF4D00] fill-[#FF4D00]'
+                        : 'text-zinc-300'
                     }`}
                   />
                 </button>
@@ -99,14 +102,14 @@ export const ReviewsAndAbout: React.FC = () => {
               rows={2}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Share your experience with Roll N Roll... *"
+              placeholder="Share your feedback on Roll N Roll... *"
               required
-              className="sm:col-span-2 px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500 resize-none"
+              className="sm:col-span-2 px-3.5 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-black resize-none"
             />
             <div className="sm:col-span-2 flex justify-end">
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs cursor-pointer"
+                className="px-5 py-2.5 rounded-full bg-black hover:bg-[#FF4D00] text-white font-bold text-xs cursor-pointer transition-colors"
               >
                 Post Review
               </button>
@@ -114,31 +117,33 @@ export const ReviewsAndAbout: React.FC = () => {
           </form>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
           {reviews.map((rev) => (
             <div
               key={rev.id}
-              className="p-5 rounded-xl bg-[#121214] border border-white/10 flex flex-col justify-between gap-4"
+              className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex flex-col justify-between gap-4"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex items-center justify-between gap-2 mb-2.5">
                   <div className="flex items-center gap-0.5">
                     {Array.from({ length: rev.rating }).map((_, idx) => (
                       <Star
                         key={idx}
-                        className="w-4 h-4 text-amber-400 fill-amber-400"
+                        className="w-3.5 h-3.5 text-[#FF4D00] fill-[#FF4D00]"
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-zinc-500">{rev.date}</span>
+                  <span className="text-[11px] font-medium text-zinc-400">
+                    {rev.date}
+                  </span>
                 </div>
-                <p className="text-sm text-zinc-200 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed">
                   "{rev.comment}"
                 </p>
               </div>
-              <div className="pt-3 border-t border-white/5 text-xs">
-                <div className="font-bold text-white">{rev.author}</div>
-                <div className="text-zinc-400 mt-0.5">
+              <div className="pt-3 border-t border-zinc-100 text-xs">
+                <div className="font-bold text-zinc-900">{rev.author}</div>
+                <div className="text-zinc-500 mt-0.5">
                   {rev.neighborhood} · {rev.dishOrdered}
                 </div>
               </div>
@@ -147,61 +152,26 @@ export const ReviewsAndAbout: React.FC = () => {
         </div>
       </section>
 
-      {/* About / Our Story Section */}
+      {/* Light Gray About / Info Box matching Burger Lab reference video (0:48) */}
       <section
         id="about"
-        className="scroll-mt-[140px] border-t border-white/5 bg-[#101012]"
+        className="scroll-mt-[136px] rounded-2xl bg-[#F4F4F5] border border-zinc-200/70 p-6 sm:p-8 text-xs sm:text-sm text-zinc-700 leading-relaxed space-y-1.5"
       >
-        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="flex items-center gap-3">
-              <img
-                src={LOGO_URL}
-                alt="Roll N Roll Brand Emblem"
-                referrerPolicy="no-referrer"
-                className="w-12 h-12 rounded-full object-cover border-2 border-amber-500/80"
-              />
-              <div>
-                <h2 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide text-white">
-                  Our Story — Karachi's Late-Night Favorite
-                </h2>
-              </div>
-            </div>
-            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-2xl">
-              Born at Jamshed Road No. 3 (M.L Plaza, Shop No. 4, Opposite Ghazi Bakery) in the heart of Karachi, Roll N Roll brings together crispy golden paratha rolls, flat-top smashed beef burgers, injected zingers, hand-tossed pizzas, creamy pastas, and authentic charcoal tikka & masala khausa — all prepared fresh to order with 100% Zabiha Halal ingredients.
-            </p>
-          </div>
-
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3.5">
-            <div className="p-4 rounded-xl bg-[#161619] border border-white/10 flex items-center gap-3.5">
-              <Flame className="w-5 h-5 text-amber-400 shrink-0" />
-              <div>
-                <div className="text-sm font-bold text-white">Freshly Seared & Crispy</div>
-                <div className="text-xs text-zinc-400">
-                  Smashed beef patties & hand-breaded zingers cooked per order
-                </div>
-              </div>
-            </div>
-            <div className="p-4 rounded-xl bg-[#161619] border border-white/10 flex items-center gap-3.5">
-              <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
-              <div>
-                <div className="text-sm font-bold text-white">100% Halal & Quality Kitchen</div>
-                <div className="text-xs text-zinc-400">
-                  Pure beef, fresh daily produce & house-made signature dips
-                </div>
-              </div>
-            </div>
-            <div className="p-4 rounded-xl bg-[#161619] border border-white/10 flex items-center gap-3.5">
-              <Timer className="w-5 h-5 text-amber-400 shrink-0" />
-              <div>
-                <div className="text-sm font-bold text-white">Fast Karachi Delivery</div>
-                <div className="text-xs text-zinc-400">
-                  Hot dispatch across Jamshed Road, PECHS, Bahadurabad & Gulshan
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <p className="font-semibold text-zinc-900">
+          Check out the amazing food variety of Roll N Roll — Karachi.
+        </p>
+        <p>
+          We strive to bring the best experience of online ordering, crispy paratha
+          rolls, smashed beef burgers, pizzas, pastas, broast &amp; desi specials to
+          our customers across Karachi.
+        </p>
+        <p>
+          Visit our branch at{' '}
+          <span className="font-semibold text-zinc-900">
+            {RESTAURANT_INFO.address}
+          </span>{' '}
+          or order fresh delivery directly online or via WhatsApp ({RESTAURANT_INFO.phoneDisplay})!
+        </p>
       </section>
     </div>
   );

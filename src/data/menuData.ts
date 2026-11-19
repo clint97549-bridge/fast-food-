@@ -15,10 +15,21 @@ export const RESTAURANT_INFO = {
   whatsappNumber: '923148334879',
   address:
     'Jamshed Road No. 3, M.L Plaza, Shop No. 4, Opposite Ghazi Bakery, Karachi, Pakistan',
-  shortAddress: 'Jamshed Road No. 3, Karachi',
+  shortAddress: 'Jamshed Rd No. 3',
   coordinates: { lat: 24.8825, lng: 67.0485 },
   hours: 'Open now',
 };
+
+export const DELIVERY_AREAS = [
+  'Jamshed Rd No. 3',
+  'Shikarpur Colony',
+  'PECHS Block 2 & 6',
+  'Bahadurabad',
+  'Soldier Bazaar',
+  'Tariq Road',
+  'Gulshan-e-Iqbal',
+  'Numaish & Saddar',
+];
 
 // User-uploaded Roll N Roll promotional food posters
 const POSTERS = {
@@ -95,14 +106,15 @@ const POSTERS = {
 
 export interface HeroSlide {
   id: string;
-  badge?: string;
+  eyebrow?: string;
   headline: string;
   subheadline: string;
+  callouts?: string[];
   originalPrice?: number;
-  price?: number;
+  price: number;
   image: string;
   targetCategoryId: string;
-  accentColor: 'amber' | 'red';
+  theme: 'orange' | 'cream' | 'crimson' | 'dark';
 }
 
 export interface AddOnOption {
@@ -117,20 +129,27 @@ export interface MenuItem {
   name: string;
   description: string;
   price: number;
+  originalPrice?: number;
+  badge?: 'New Arrival' | '15% OFF' | 'Best Seller';
+  isFromPrice?: boolean;
   image: string;
   hasAddOnModal: boolean;
-  isPosterImage?: boolean;
 }
+
+export type BannerMotif =
+  | 'starburst'
+  | 'flask'
+  | 'burger'
+  | 'wrap'
+  | 'drink'
+  | 'pizza';
 
 export interface MenuCategory {
   id: string;
   label: string;
   bannerTitle: string;
-  subTag?: string;
-  spotlightImages: {
-    image: string;
-    label: string;
-  }[];
+  arabicAccent?: string;
+  motif: BannerMotif;
 }
 
 export const GLOBAL_ADDONS: AddOnOption[] = [
@@ -145,181 +164,128 @@ export const GLOBAL_ADDONS: AddOnOption[] = [
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: 'slide-smoky-beast',
-    headline: 'SMOKY BEAST',
-    subheadline: 'TOP RATED',
-    image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
-    targetCategoryId: 'premium-beef',
-    accentColor: 'amber',
-  },
-  {
-    id: 'slide-weekend-combo',
-    badge: '1 ZINGER BURGER + 1 LEG BROAST + FRIES + COLESLAW',
-    headline: 'WEEKEND COMBO',
-    subheadline: 'ONLY RS. 800',
+    id: 'slide-weekend-thrill',
+    eyebrow: 'ROLL N ROLL KARACHI SPECIAL',
+    headline: 'WEEKEND THRILL BOX',
+    subheadline: '1 Zinger Burger · 1 Leg Broast · Fries · Coleslaw',
+    callouts: ['Crispy Zinger', 'Leg Broast', 'Golden Fries'],
     originalPrice: 900,
     price: 800,
     image: POSTERS.weekendCombo,
     targetCategoryId: 'combo-deals',
-    accentColor: 'amber',
+    theme: 'orange',
   },
   {
-    id: 'slide-zinger-rolls',
-    badge: 'FRESH PARATHA & JUMBO TORTILLA WRAPS',
+    id: 'slide-deal-19',
+    eyebrow: 'GOOD THING IT’S REAL',
+    headline: 'DEAL 19 PLATTER',
+    subheadline: 'Chicken Burger + Club Sandwich + Fries + Coleslaw',
+    callouts: ['Club Sandwich', 'Zinger Burger', 'Coleslaw'],
+    originalPrice: 880,
+    price: 750,
+    image: POSTERS.deal19,
+    targetCategoryId: 'combo-deals',
+    theme: 'cream',
+  },
+  {
+    id: 'slide-zinger-wraps',
+    eyebrow: 'NOW INTRODUCING',
     headline: 'CRISPY ZINGER ROLLS',
-    subheadline: 'BOLD FLAVOR · RS. 450',
+    subheadline: 'Fresh Paratha & Jumbo Tortilla Wraps · Bold Karachi Sauce',
+    callouts: ['Crispy Zinger', 'Dynamite Mayo', 'Toasted Paratha'],
     price: 450,
     image: POSTERS.crispyZingerRoll,
     targetCategoryId: 'rolls-wraps',
-    accentColor: 'red',
+    theme: 'crimson',
   },
   {
-    id: 'slide-pizza-pasta',
-    badge: 'HAND-TOSSED CRUST & CREAMY ALFREDO PENNE',
-    headline: 'PIZZA & PASTA',
-    subheadline: 'BAKED FRESH TO ORDER',
-    price: 780,
-    image: POSTERS.alfredoPasta,
-    targetCategoryId: 'pizza-pasta',
-    accentColor: 'amber',
+    id: 'slide-smoky-beast',
+    eyebrow: 'FLAT-TOP SMASHED',
+    headline: 'SMOKY BEAST SMASH',
+    subheadline: 'Double Beef Patties · Smoky Strips · Double Cheddar',
+    callouts: ['2x Beef Patties', 'Double Cheddar', 'BBQ Glaze'],
+    originalPrice: 1250,
+    price: 1080,
+    image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
+    targetCategoryId: 'premium-beef',
+    theme: 'dark',
   },
-  {
-    id: 'slide-crispy-box',
-    badge: 'CRISPY STRIPS + ZINGER + FRIES + CHILLED DRINK',
-    headline: 'CRISPY BITES',
-    subheadline: 'LOADED DELIGHTS · RS. 950',
-    price: 950,
-    image: POSTERS.crispyBitesBox,
-    targetCategoryId: 'combo-deals',
-    accentColor: 'red',
-  },
+];
+
+export const POPULAR_ITEM_IDS = [
+  'weekend-combo-deal',
+  'crispy-zinger-roll',
+  'smoky-beast-burger',
+  'injected-zinger-burger',
 ];
 
 export const MENU_CATEGORIES: MenuCategory[] = [
   {
     id: 'combo-deals',
-    label: 'Combo Deals',
-    bannerTitle: 'COMBO DEALS',
-    spotlightImages: [
-      { image: POSTERS.weekendCombo, label: 'Weekend Combo Deal' },
-      { image: POSTERS.comboDeal5, label: 'Combo Deal 5' },
-    ],
+    label: 'Say Less (Deals)',
+    bannerTitle: 'SAY LESS',
+    motif: 'starburst',
   },
   {
     id: 'rolls-wraps',
-    label: 'Rolls & Wraps',
-    bannerTitle: 'ROLLS & WRAPS',
-    spotlightImages: [
-      { image: POSTERS.crispyZingerRoll, label: 'Crispy Zinger Roll' },
-      { image: POSTERS.adhaTeraWrap, label: 'Adha Tera Adha Mera Wrap' },
-    ],
+    label: 'Wrap It Up',
+    bannerTitle: 'WRAP IT UP',
+    motif: 'wrap',
   },
   {
     id: 'classic-beef',
-    label: 'Classic Beef',
-    bannerTitle: 'CLASSIC BEEF',
-    subTag: 'SINGLE',
-    spotlightImages: [
-      {
-        image: assetUrl('/src/assets/images/burger_classic_smash_1794923955768.jpg'),
-        label: 'American Classic',
-      },
-      {
-        image: assetUrl('/src/assets/images/burger_premium_double_1794923957962.jpg'),
-        label: 'Mushroom Smash',
-      },
-    ],
+    label: 'Classic Smash',
+    bannerTitle: 'CLASSIC SMASH',
+    motif: 'burger',
   },
   {
     id: 'premium-beef',
-    label: 'Premium Beef',
-    bannerTitle: 'PREMIUM BEEF',
-    subTag: 'DOUBLE & TRIPLE',
-    spotlightImages: [
-      {
-        image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
-        label: 'Smoky Beast',
-      },
-      {
-        image: assetUrl('/src/assets/images/burger_premium_double_1794923957962.jpg'),
-        label: 'Triple Smash Tower',
-      },
-    ],
+    label: 'The Mains',
+    bannerTitle: 'THE MAINS',
+    motif: 'burger',
   },
   {
     id: 'zingsters',
-    label: 'Zingsters',
-    bannerTitle: 'ZINGSTERS',
-    spotlightImages: [
-      { image: POSTERS.injectedZinger, label: 'Injected Zinger Burger' },
-      { image: POSTERS.adhaTeraZinger, label: 'Adha Tera Adha Mera Zinger' },
-    ],
+    label: 'The Loud Chicken',
+    bannerTitle: 'THE LOUD CHICKEN',
+    motif: 'starburst',
   },
   {
     id: 'pizza-pasta',
     label: 'Pizza & Pasta',
     bannerTitle: 'PIZZA & PASTA',
-    spotlightImages: [
-      { image: POSTERS.beefPepperoniPizza, label: 'Beef Pepperoni Pizza' },
-      { image: POSTERS.alfredoPasta, label: 'Alfredo Pasta' },
-    ],
+    motif: 'pizza',
   },
   {
     id: 'sandwiches-broast',
-    label: 'Sandwiches & Broast',
-    bannerTitle: 'SANDWICHES & BROAST',
-    spotlightImages: [
-      { image: POSTERS.tandooriClub, label: 'Tandoori Club Sandwich' },
-      { image: POSTERS.juicyBroast, label: 'Juicy Broast Epic Crunch' },
-    ],
+    label: 'Clubs & Broast',
+    bannerTitle: 'CLUBS & BROAST',
+    motif: 'starburst',
   },
   {
     id: 'desi-specials',
-    label: 'Desi & Specials',
-    bannerTitle: 'DESI & SPECIALS',
-    spotlightImages: [
-      { image: POSTERS.tikkaMagic, label: 'Taste the Tikka Magic' },
-      { image: POSTERS.masalaKhausa, label: 'Signature Masala Khausa' },
-    ],
+    label: 'Injected & Desi',
+    bannerTitle: 'DESI & INJECTED',
+    arabicAccent: 'حبيبي',
+    motif: 'flask',
   },
   {
     id: 'fries-sides',
-    label: 'Fries & Sides',
-    bannerTitle: 'FRIES & SIDES',
-    spotlightImages: [
-      { image: POSTERS.arabianNuggets, label: 'Arabian Injected Nuggets' },
-      {
-        image: assetUrl('/src/assets/images/fries_loaded_smash_1794923959706.jpg'),
-        label: 'Loaded Smash Fries',
-      },
-    ],
+    label: 'Side Quests',
+    bannerTitle: 'SIDE QUESTS',
+    motif: 'starburst',
   },
   {
     id: 'drinks',
-    label: 'Drinks',
-    bannerTitle: 'DRINKS',
-    spotlightImages: [
-      {
-        image: assetUrl('/src/assets/images/drinks_mint_cola_1794923962753.jpg'),
-        label: 'Mint Margarita',
-      },
-      { image: POSTERS.crispyBitesBox, label: 'Chilled Fountain Cola' },
-    ],
+    label: 'Sip Lab',
+    bannerTitle: 'SIP LAB',
+    motif: 'drink',
   },
   {
     id: 'add-on',
     label: 'Add On',
-    bannerTitle: 'ADD ON',
-    spotlightImages: [
-      {
-        image: assetUrl('/src/assets/images/burger_classic_smash_1794923955768.jpg'),
-        label: 'Extra Beef Patty',
-      },
-      {
-        image: assetUrl('/src/assets/images/fries_loaded_smash_1794923959706.jpg'),
-        label: 'Signature Dip Sauce',
-      },
-    ],
+    bannerTitle: 'EXTRA ADD ONS',
+    motif: 'starburst',
   },
 ];
 
@@ -332,20 +298,21 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       '1 Crispy Zinger Burger + 1 crispy Leg Broast + Golden Fries + Fresh Coleslaw.',
     price: 800,
+    originalPrice: 900,
+    badge: '15% OFF',
     image: POSTERS.weekendCombo,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'combo-deal-5',
     categoryId: 'combo-deals',
-    name: 'Combo Deal 5 (5 Chicken Rolls)',
+    name: 'Combo Deal 5 (5 Rolls)',
     description:
       '5 Signature Chicken Rolls served hot with crispy French Fries & creamy Coleslaw.',
     price: 1080,
+    badge: 'Best Seller',
     image: POSTERS.comboDeal5,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'deal-19-platter',
@@ -354,9 +321,10 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Chicken Burger + Club Sandwich + Fresh Coleslaw + Crispy French Fries.',
     price: 750,
+    originalPrice: 880,
+    badge: '15% OFF',
     image: POSTERS.deal19,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'crispy-bites-loaded-box',
@@ -365,9 +333,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Golden crispy chicken strips, zinger burger, seasoned fries & chilled soft drink.',
     price: 950,
+    badge: 'New Arrival',
     image: POSTERS.crispyBitesBox,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
 
   // ROLLS & WRAPS
@@ -378,9 +346,10 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Crispy fried chicken chunks, fresh iceberg & signature Roll N Roll dynamite sauce in warm paratha.',
     price: 450,
+    isFromPrice: true,
+    badge: 'Best Seller',
     image: POSTERS.crispyZingerRoll,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'adha-tera-wrap',
@@ -389,9 +358,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Char-grilled jumbo tortilla wrap loaded with crispy zinger strips, tomatoes & garlic mayo.',
     price: 520,
+    isFromPrice: true,
     image: POSTERS.adhaTeraWrap,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'signature-roll',
@@ -400,9 +369,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Smoky grilled chicken wrapped in toasted flatbread with melted cheddar, crisp lettuce & garlic sauce.',
     price: 480,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/combo_rolls_platter_1794923954040.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'stuffed-pizza-roll',
@@ -411,9 +380,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Baked golden rolls stuffed with seasoned chicken, mozzarella cheese & Italian herbs.',
     price: 680,
+    badge: 'New Arrival',
     image: assetUrl('/src/assets/images/roll_stuffed_pizza_1794923957164.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
 
   // CLASSIC BEEF
@@ -424,9 +393,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Single smashed beef patty, melted American cheddar, crisp lettuce, pickles & house sauce.',
     price: 650,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/burger_classic_smash_1794923955768.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'mushroom-smash',
@@ -435,20 +404,20 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Juicy smashed beef patty topped with sautéed creamy mushrooms, Swiss cheese & garlic aioli.',
     price: 780,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/burger_premium_double_1794923957962.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'bacon-smash',
     categoryId: 'classic-beef',
-    name: 'Bacon Smash',
+    name: 'Smoked Beef Bacon Smash',
     description:
       'Smashed beef patty layered with crispy beef bacon, double cheddar, smoky BBQ & caramelized onions.',
     price: 820,
+    badge: 'New Arrival',
     image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'hot-jalapeno-smash',
@@ -457,9 +426,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Spicy smashed beef patty with fiery jalapeños, pepper jack cheese & chipotle mayo.',
     price: 720,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/burger_classic_smash_1794923955768.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
 
   // PREMIUM BEEF
@@ -470,9 +439,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Double smashed beef patties, 2x melted cheddar, caramelized onions & signature truffle sauce.',
     price: 980,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/burger_premium_double_1794923957962.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'cheesy-quadra',
@@ -483,7 +452,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 1150,
     image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'smoky-beast-burger',
@@ -492,9 +460,10 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Double beef patties, smoky beef strips, double cheddar, BBQ glaze & house special sauce.',
     price: 1080,
+    originalPrice: 1250,
+    badge: '15% OFF',
     image: assetUrl('/src/assets/images/hero_smoky_beast_1794923955569.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'triple-smash-tower',
@@ -505,7 +474,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 1350,
     image: assetUrl('/src/assets/images/burger_premium_double_1794923957962.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
 
   // ZINGSTERS
@@ -516,9 +484,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Golden crunchy zinger fillet injected with molten cheddar cheese sauce & spicy mayo.',
     price: 680,
+    badge: 'Best Seller',
     image: POSTERS.injectedZinger,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'adha-tera-zinger',
@@ -527,9 +495,10 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Thick crispy chicken fillet with fresh tomatoes, red onion, crisp lettuce & signature sauce.',
     price: 620,
+    originalPrice: 720,
+    badge: '15% OFF',
     image: POSTERS.adhaTeraZinger,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'classic-zingster',
@@ -538,9 +507,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       "Potato bun, crispy chicken thigh fillet, iceberg lettuce, cheese & chef's zinger sauce.",
     price: 580,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/burger_injected_zinger_1794923957389.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
   {
     id: 'double-cruncher',
@@ -551,7 +520,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 890,
     image: assetUrl('/src/assets/images/hero_weekend_combo_1794923954426.jpg'),
     hasAddOnModal: true,
-    isPosterImage: false,
   },
 
   // PIZZA & PASTA
@@ -562,9 +530,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Hand-tossed crust topped with spiced grilled chicken, mushrooms, cherry tomatoes & mozzarella.',
     price: 1150,
+    isFromPrice: true,
     image: POSTERS.cheesyPizza,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'beef-pepperoni-pizza',
@@ -573,9 +541,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Classic red sauce pizza loaded with smoky beef pepperoni, green bell peppers & olives.',
     price: 1290,
+    isFromPrice: true,
     image: POSTERS.beefPepperoniPizza,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'pizza-and-pizza-roll',
@@ -584,9 +552,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Cheesy chicken pizza paired with 4 stuffed pizza rolls & creamy garlic dip.',
     price: 1490,
+    badge: 'Best Seller',
     image: POSTERS.pizzaAndRoll,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'adha-tera-pizza',
@@ -595,9 +563,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Loaded pan-crust pizza with pepperoni, black olives, mushrooms, capsicum & extra cheese.',
     price: 1190,
+    isFromPrice: true,
     image: POSTERS.adhaTeraPizza,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'creamy-chicken-penne',
@@ -606,9 +574,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Al dente penne tossed in rich creamy tomato herb sauce with tender chicken & parmesan.',
     price: 780,
+    isFromPrice: true,
     image: POSTERS.creamyPasta,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'alfredo-pasta',
@@ -617,9 +585,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Creamy, cheesy, irresistible penne pasta with grilled chicken strips, mushrooms & herbs.',
     price: 850,
+    badge: 'New Arrival',
     image: POSTERS.alfredoPasta,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
 
   // SANDWICHES & BROAST
@@ -630,9 +598,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Triple-decker toasted sandwich stacked with smoky tandoori chicken cubes, fried egg & fries.',
     price: 620,
+    isFromPrice: true,
     image: POSTERS.tandooriClub,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'chicken-club-sandwich',
@@ -641,9 +609,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Classic grilled chicken club sandwich served with golden fries, pickles & coleslaw.',
     price: 590,
+    isFromPrice: true,
     image: POSTERS.chickenClubSandwich,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'adha-tera-club',
@@ -654,7 +622,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 680,
     image: POSTERS.adhaTeraClub,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'juicy-broast-epic',
@@ -663,9 +630,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Golden crispy cheese-injected chicken broast seasoned with spices & French fries.',
     price: 690,
+    badge: 'Best Seller',
     image: POSTERS.juicyBroast,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
 
   // DESI & SPECIALS
@@ -676,9 +643,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Charcoal-grilled chicken tikka skewers served with fresh green mint chutney, onions & lemon.',
     price: 450,
+    isFromPrice: true,
     image: POSTERS.tikkaMagic,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'signature-masala-khausa',
@@ -687,9 +654,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Rich, creamy coconut curry over noodles topped with spiced chicken, crispy papdi & boiled egg.',
     price: 620,
+    badge: 'Best Seller',
     image: POSTERS.masalaKhausa,
     hasAddOnModal: true,
-    isPosterImage: true,
   },
   {
     id: 'chicken-corn-soup',
@@ -700,7 +667,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 390,
     image: POSTERS.chickenSoup,
     hasAddOnModal: false,
-    isPosterImage: true,
   },
   {
     id: 'special-pistachio-kunafa',
@@ -709,9 +675,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Authentic crispy golden kunafa filled with rich cream & topped with crushed green pistachios.',
     price: 750,
+    badge: 'New Arrival',
     image: POSTERS.specialKunafa,
     hasAddOnModal: false,
-    isPosterImage: true,
   },
 
   // FRIES & SIDES
@@ -722,9 +688,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Crispy golden chicken nuggets injected with molten cheddar & garlic sauce + creamy dip.',
     price: 520,
+    badge: 'New Arrival',
     image: POSTERS.arabianNuggets,
     hasAddOnModal: false,
-    isPosterImage: true,
   },
   {
     id: 'loaded-smash-fries',
@@ -733,9 +699,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Crispy fries loaded with melted cheddar cheese, chopped beef, crispy chicken & jalapeños.',
     price: 650,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/fries_loaded_smash_1794923959706.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'cheese-loaded-fries',
@@ -744,9 +710,9 @@ export const MENU_ITEMS: MenuItem[] = [
     description:
       'Golden crispy fries drenched in warm melted cheddar cheese & herbs.',
     price: 480,
+    isFromPrice: true,
     image: assetUrl('/src/assets/images/fries_loaded_smash_1794923959706.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'classic-crispy-fries',
@@ -757,7 +723,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 250,
     image: assetUrl('/src/assets/images/combo_rolls_platter_1794923954040.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
 
   // DRINKS
@@ -769,7 +734,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 290,
     image: assetUrl('/src/assets/images/drinks_mint_cola_1794923962753.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'chilled-soft-drink',
@@ -779,7 +743,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 130,
     image: assetUrl('/src/assets/images/drinks_mint_cola_1794923962753.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'jumbo-fountain-cola',
@@ -789,7 +752,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 180,
     image: POSTERS.crispyBitesBox,
     hasAddOnModal: false,
-    isPosterImage: true,
   },
   {
     id: 'peach-iced-tea',
@@ -799,7 +761,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 280,
     image: assetUrl('/src/assets/images/drinks_mint_cola_1794923962753.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
 
   // ADD ON
@@ -811,7 +772,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 280,
     image: assetUrl('/src/assets/images/burger_classic_smash_1794923955768.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'addon-extra-cheese-slice',
@@ -821,7 +781,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 90,
     image: assetUrl('/src/assets/images/burger_injected_zinger_1794923957389.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
   {
     id: 'addon-signature-dip',
@@ -832,7 +791,6 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 80,
     image: assetUrl('/src/assets/images/fries_loaded_smash_1794923959706.jpg'),
     hasAddOnModal: false,
-    isPosterImage: false,
   },
 ];
 

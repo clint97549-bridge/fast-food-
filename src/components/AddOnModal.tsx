@@ -46,51 +46,54 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs"
       role="dialog"
       aria-modal="true"
       aria-labelledby="addon-modal-title"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg bg-[#141416] border border-white/15 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+        className="w-full max-w-lg bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Dish Header Banner */}
-        <div className="relative h-44 w-full shrink-0">
+        <div className="relative h-48 w-full shrink-0 bg-zinc-100">
           <img
             src={item.image}
             alt={item.name}
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-black/40 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
           <button
             type="button"
             onClick={onClose}
             aria-label="Close customization modal"
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/70 hover:bg-amber-500 hover:text-black text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white hover:bg-black hover:text-white text-zinc-900 flex items-center justify-center transition-colors cursor-pointer shadow-md"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
-          <div className="absolute bottom-3 left-5 right-5">
+          <div className="absolute bottom-3.5 left-5 right-5">
             <h3
               id="addon-modal-title"
-              className="font-display text-2xl font-bold uppercase tracking-wide text-white"
+              className="text-xl sm:text-2xl font-extrabold text-white leading-tight"
             >
               {item.name}
             </h3>
-            <p className="text-xs text-zinc-300 mt-0.5 line-clamp-2">
+            <p className="text-xs text-zinc-200 mt-0.5 line-clamp-2">
               {item.description}
             </p>
           </div>
         </div>
 
         {/* Scrollable Customization Options */}
-        <form onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-5 flex-1">
+        <form
+          onSubmit={handleSubmit}
+          className="p-5 overflow-y-auto space-y-5 flex-1 bg-white"
+        >
           {/* Spice Level */}
           <div>
-            <div className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
+            <div className="text-xs font-extrabold uppercase tracking-wider text-zinc-500 mb-2">
               Spice Level
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -99,10 +102,10 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
                   key={level}
                   type="button"
                   onClick={() => setSpiceLevel(level)}
-                  className={`px-3 py-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                  className={`px-3 py-2 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                     spiceLevel === level
-                      ? 'bg-amber-500 text-black border-amber-500'
-                      : 'bg-zinc-900 text-zinc-300 border-white/10 hover:border-white/25'
+                      ? 'bg-black text-white border-black'
+                      : 'bg-zinc-50 text-zinc-700 border-zinc-200 hover:border-zinc-400'
                   }`}
                 >
                   {level}
@@ -114,10 +117,12 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
           {/* Extra Add-Ons */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-zinc-500">
                 Add Extras & Dips
               </span>
-              <span className="text-[11px] text-zinc-500">Optional</span>
+              <span className="text-[11px] font-medium text-zinc-400">
+                Optional
+              </span>
             </div>
             <div className="space-y-2">
               {GLOBAL_ADDONS.map((addon) => {
@@ -129,25 +134,25 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
                     onClick={() => toggleAddOn(addon.id)}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-left transition-colors cursor-pointer ${
                       isSelected
-                        ? 'bg-amber-500/10 border-amber-500/60 text-white'
-                        : 'bg-zinc-900/80 border-white/10 text-zinc-300 hover:border-white/20'
+                        ? 'bg-[#FFF5E6] border-[#FF4D00] text-zinc-900'
+                        : 'bg-white border-zinc-200 text-zinc-800 hover:border-zinc-400'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <span
                         className={`w-4 h-4 rounded flex items-center justify-center border ${
                           isSelected
-                            ? 'bg-amber-500 border-amber-500 text-black'
-                            : 'border-zinc-600'
+                            ? 'bg-black border-black text-white'
+                            : 'border-zinc-300'
                         }`}
                       >
                         {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
                       </span>
-                      <span className="text-xs sm:text-sm font-medium">
+                      <span className="text-xs sm:text-sm font-semibold">
                         {addon.name}
                       </span>
                     </div>
-                    <span className="text-xs font-bold text-amber-400 tabular-nums">
+                    <span className="text-xs font-extrabold text-zinc-900 tabular-nums">
                       + Rs. {addon.price}
                     </span>
                   </button>
@@ -160,7 +165,7 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
           <div>
             <label
               htmlFor="kitchen-notes"
-              className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1.5"
+              className="block text-xs font-extrabold uppercase tracking-wider text-zinc-500 mb-1.5"
             >
               Special Instructions
             </label>
@@ -170,37 +175,37 @@ export const AddOnModal: React.FC<AddOnModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g., No onions, extra garlic mayo, well toasted..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900 border border-white/10 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:border-black"
             />
           </div>
 
-          {/* Sticky Modal Footer: Quantity & Add Button */}
-          <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2 bg-zinc-900 border border-white/10 rounded-xl p-1">
+          {/* Footer Quantity & Add Button */}
+          <div className="pt-3 border-t border-zinc-100 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2 bg-zinc-100 rounded-full p-1">
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                 aria-label="Decrease quantity"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-300 hover:bg-white/10 hover:text-white cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white text-zinc-800 hover:bg-black hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
               >
-                <Minus className="w-4 h-4" />
+                <Minus className="w-3.5 h-3.5" />
               </button>
-              <span className="w-7 text-center text-sm font-bold tabular-nums">
+              <span className="w-6 text-center text-sm font-extrabold tabular-nums text-zinc-900">
                 {quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
                 aria-label="Increase quantity"
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-zinc-300 hover:bg-white/10 hover:text-white cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white text-zinc-800 hover:bg-black hover:text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-3.5 h-3.5" />
               </button>
             </div>
 
             <button
               type="submit"
-              className="flex-1 py-3 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-colors cursor-pointer flex items-center justify-between"
+              className="flex-1 py-3 px-5 rounded-full bg-black hover:bg-[#FF4D00] text-white font-bold text-sm transition-colors cursor-pointer flex items-center justify-between shadow-md"
             >
               <span>Add to Order</span>
               <span className="tabular-nums font-extrabold">Rs. {totalPrice}</span>
